@@ -1,0 +1,197 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.barchart.base</groupId>
+		<artifactId>barchart-archon</artifactId>
+		<version>2.6.7</version>
+	</parent>
+
+	<artifactId>barchart-wrap-flip-tables</artifactId>
+	<version>1.0.1-SNAPSHOT</version>
+	<packaging>bundle</packaging>
+
+	<properties>
+
+		<projectJavaVersion>1.7</projectJavaVersion>
+
+		<repo-url>https://github.com/JakeWharton/flip-tables.git</repo-url>
+		<repo-connection>scm:git:${repo-url}</repo-connection>
+
+		<repodir>${project.build.directory}/checkout-github</repodir>
+
+	</properties>
+
+	<scm>
+		<url>https://github.com/barchart/barchart-wrap-flip-tables</url>
+		<connection>scm:git:git://github.com/barchart/barchart-wrap-flip-tables.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/barchart/barchart-wrap-flip-tables.git</developerConnection>
+	</scm>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.easytesting</groupId>
+			<artifactId>fest-assert-core</artifactId>
+			<version>2.0M10</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+
+	<build>
+
+		<plugins>
+
+			<!-- cleanup local copy -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>clean-sources</id>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+						<phase>clean</phase>
+						<configuration>
+							<filesets>
+								<fileset>
+									<directory>src</directory>
+									<includes>
+										<include>**/*</include>
+									</includes>
+								</fileset>
+							</filesets>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- download from github -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-scm-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>checkout-github</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>checkout</goal>
+						</goals>
+						<configuration>
+							<connectionUrl>${repo-connection}</connectionUrl>
+							<checkoutDirectory>${repodir}</checkoutDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- update local copy -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-main</id>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>${repodir}</directory>
+									<filtering>false</filtering>
+									<includes>
+										<path>**/*.java</path>
+									</includes>
+									<!-- <excludes> -->
+									<!-- <path>src/test/java/com/jakewharton/fliptables/*.java</path> -->
+									<!-- </excludes> -->
+								</resource>
+							</resources>
+							<overwrite>true</overwrite>
+							<outputDirectory>${basedir}</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-test</id>
+						<phase>DISABLED</phase>
+						<!-- <phase>process-sources</phase> -->
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>${repodir}</directory>
+									<filtering>false</filtering>
+									<includes>
+										<path>src/test/java/com/jakewharton/fliptables/*.java</path>
+									</includes>
+									<excludes>
+										<path>src/main/java/com/jakewharton/fliptables/*.java</path>
+									</excludes>
+								</resource>
+							</resources>
+							<overwrite>true</overwrite>
+							<outputDirectory>${basedir}</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-scm-plugin</artifactId>
+										<versionRange>[0,)</versionRange>
+										<goals>
+											<goal>checkout</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-clean-plugin</artifactId>
+										<versionRange>[0,)
+										</versionRange>
+										<goals>
+											<goal>clean</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>
