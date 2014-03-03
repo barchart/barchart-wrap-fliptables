@@ -8,7 +8,7 @@
 	</parent>
 
 	<artifactId>barchart-wrap-flip-tables</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
 	<properties>
@@ -26,7 +26,7 @@
 		<url>https://github.com/barchart/barchart-wrap-fliptables</url>
 		<connection>scm:git:git://github.com/barchart/barchart-wrap-fliptables.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/barchart/barchart-wrap-fliptables.git</developerConnection>
-	  <tag>barchart-wrap-flip-tables-1.0.1</tag>
+	  <tag>HEAD</tag>
   </scm>
 
 	<dependencies>
