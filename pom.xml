@@ -24,9 +24,9 @@
 	</properties>
 
 	<scm>
-		<url>https://github.com/barchart/barchart-wrap-flip-tables</url>
-		<connection>scm:git:git://github.com/barchart/barchart-wrap-flip-tables.git</connection>
-		<developerConnection>scm:git:ssh://git@github.com/barchart/barchart-wrap-flip-tables.git</developerConnection>
+		<url>https://github.com/barchart/barchart-wrap-fliptables</url>
+		<connection>scm:git:git://github.com/barchart/barchart-wrap-fliptables.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/barchart/barchart-wrap-fliptables.git</developerConnection>
 	</scm>
 
 	<dependencies>
